@@ -51,6 +51,10 @@ for filename in files:
     full_filename = folder + '/' + filename
     type_extension = magic.from_file(full_filename, mime=True)
     file_type, file_extension = type_extension.split('/')
+    if file_extension == 'x-matroska':
+        file_extension = 'mkv'
+    elif file_extension == 'x-msvideo':
+        file_extension = 'avi'
     if (op_type == 'add'):
         new_full_filename = full_filename.rsplit(".", 1)[0]+'.'+file_extension
     elif (op_type == 'remove'):
