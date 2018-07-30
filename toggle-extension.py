@@ -6,9 +6,26 @@ import sys
 import getopt
 
 # Utilisation
-# -f <folder_name> indicates the folder where the opération will be done
+# -f <folder_name> indicates the folder where the operation will be done
 # -a to add the extension
-# -r to remove the extension
+# -d to remove the extension
+# -r recursive folder
+usage="""NOM:
+toggle_extension.py - Add or remove the extension of video files
+
+USAGE:
+toggle_extension -f <folder_name> [-a|-d] [-r]
+
+VERSION:
+1.1
+
+OPTIONS:
+-f <folder_name> specifies the folder where the operation will be done
+-a add the extension
+-d delete the extension
+-r do the operation to the subdirectories
+-h print this menu
+"""
 
 # Variables initialisation
 folder = ''
@@ -17,10 +34,14 @@ is_recursive = False
 
 # Get the options
 try:
-    opts, args = getopt.getopt(sys.argv[1:], "adrf:")
+    opts, args = getopt.getopt(sys.argv[1:], "adrhf:")
 except Exception as e:
     print("You forgot an argument of an option")
     sys.exit(1)
+
+# If the user do not enter any option
+if (not opts):
+    print(usage)
 
 # Treat the options
 for o, a in opts:
@@ -35,6 +56,8 @@ for o, a in opts:
         op_type = 'delete'
     elif o == '-r':
         is_recursive = True
+    elif o == '-h':
+        print(usage)
 
 # Check if all options are ok
 if not folder:
