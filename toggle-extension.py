@@ -14,7 +14,7 @@ usage="""NOM:
 toggle_extension.py - Add or remove the extension of video files
 
 USAGE:
-toggle_extension -f <folder_name> [-a|-d] [-r]
+toggle_extension.py -f <folder_name> [-a|-d] [-r]
 
 VERSION:
 1.1
