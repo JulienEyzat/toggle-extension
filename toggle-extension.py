@@ -89,6 +89,16 @@ def toggle_extension(files, path):
                     file_extension = 'mkv'
                 elif file_extension == 'x-msvideo':
                     file_extension = 'avi'
+                elif file_extension == 'x-m4v':
+                    file_extension = 'm4v'
+                elif file_extension == 'quicktime':
+                    file_extension = 'mov'
+                elif file_extension == 'x-ms-wmv':
+                    file_extension = 'wmv'
+                elif file_extension == 'mpeg':
+                    file_extension = 'mpg'
+                elif file_extension == 'x-flv':
+                    file_extension = 'flv'
                 if (op_type == 'add'):
                     new_full_filename = full_filename.rsplit(".", 1)[0]+'.'+file_extension
                 elif (op_type == 'delete'):
