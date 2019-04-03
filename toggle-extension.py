@@ -72,6 +72,13 @@ except Exception as e:
     print(e)
     sys.exit(1)
 
+# Test the magic librairy installed
+is_python_magic = False
+try:
+    m = magic.open(magic.MAGIC_MIME)
+except:
+    is_python_magic = True
+
 # Add or remove the extension
 def toggle_extension(files, path):
     for filename in files:
@@ -82,7 +89,12 @@ def toggle_extension(files, path):
                 new_files = os.listdir(full_filename)
                 toggle_extension(new_files, path + filename + '/')
         else:
-            type_extension = magic.from_file(full_filename, mime=True)
+            if is_python_magic:
+                type_extension = magic.from_file(full_filename, mime=True)
+            else:
+                m = magic.open(magic.MAGIC_MIME)
+                m.load()
+                type_extension = m.file(full_filename).split(';')[0]
             file_type, file_extension = type_extension.split('/')
             if file_type == 'video':
                 if file_extension == 'x-matroska':
@@ -100,9 +112,15 @@ def toggle_extension(files, path):
                 elif file_extension == 'x-flv':
                     file_extension = 'flv'
                 if (op_type == 'add'):
-                    new_full_filename = full_filename.rsplit(".", 1)[0]+'.'+file_extension
+                    if full_filename.split(".")[-1] != file_extension:
+                        new_full_filename = "%s.%s" %(full_filename, file_extension)
+                    else:
+                        new_full_filename = full_filename
                 elif (op_type == 'delete'):
-                    new_full_filename = full_filename.rsplit(".", 1)[0]
+                    if full_filename.split(".")[-1] == file_extension:
+                        new_full_filename = ".".join(full_filename.split(".")[:-1])
+                    else:
+                        new_full_filename = full_filename
                 os.rename(full_filename, new_full_filename)
                 print(new_full_filename)
 
